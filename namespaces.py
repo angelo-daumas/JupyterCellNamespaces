@@ -77,8 +77,8 @@ def use_namespace(enable: bool=True, name: Optional[str]=None, ns: Optional[Name
   if name is not None:
     ns = namespaces[name]
 
+  globals_snapshot()
   if enable:
-    globals_snapshot()
     try: 
       if ns is not None:
          ns.__dict__ = GDict(ns.__dict__.items())
@@ -93,4 +93,4 @@ def use_namespace(enable: bool=True, name: Optional[str]=None, ns: Optional[Name
       globals_restore()
   else:
     try: yield None
-    finally: pass
+    finally: del G.__dict__
