@@ -1,2 +1,50 @@
 # JupyterCellNamespaces
 A module that allows you to create block-scoped namespaces in Python (intended for use in Jupyter cells)
+
+## Special variables:
+
+* `globals()`: this is the built-in python function. Namespace-specific variables will be stored here and then removed when the `with` statement is exited.
+* `G`: this global variable will contain the global state before entering the `with` statement. It can also be used to set global variables.
+* `NS`: in the examples below, this represents the `Namespace` that is currently active. In order to actually store variables for future use in this namespace, they must be declared as `NS.variable_name = `. If they are simply declared as `variable_name = `, they will only exist inside of the current block and won't be present if the same namespace is used in another `with` block.
+
+
+## Usage:
+
+This module will generally be used by "activating" namespaces inside of an `with` block.
+
+### Using the `use_namespace` function:
+
+```python
+with with use_local_namespace(name='my_namespace') as NS:
+  abc = 2
+  print(abc)  # will print 2 on the console.
+
+abc  # ERROR: Will not exist.
+namespaces.my_namespace.abc  # ERROR: Will not exist.
+```
+
+
+### Accessing the `namespaces` variable:
+Namespaces can be stored in the `namespaces` variable. They can be called in an `with` statement in order to be activated. If a namespace with that name does not exist in the `namespaces` variable, it will be automatically created.
+
+```python
+with namespaces.my_namespace() as NS:
+  G.abc = 2
+  print(abc)  # will print 2 on the console.
+
+abc  # Will be equal to 2.
+namespaces.my_namespace.abc  # ERROR: Will not exist.
+```
+
+### Creating a `Namespace` directly:
+It is also possible to create a Namespace object that is not stored in the `namespaces` variable.
+
+```python
+NS = Namespace()
+with NS():
+  NS.abc = 2
+  print(abc)  # will print 2 on the console.
+
+NS.abc  # Will be equal to 2
+abc  # ERROR: Will not exist.
+```
