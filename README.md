@@ -15,7 +15,7 @@ This module will generally be used by "activating" namespaces inside of an `with
 ### Using the `use_namespace` function:
 
 ```python
-with with use_local_namespace(name='my_namespace') as NS:
+with with use_namespace(name='my_namespace') as NS:
   abc = 2
   print(abc)  # will print 2 on the console.
 
