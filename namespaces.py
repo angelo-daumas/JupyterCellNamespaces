@@ -1,6 +1,8 @@
 from contextlib import contextmanager
 from typing import Optional
 
+import __main__
+
 class AttributeDict():
   """Base class with item get/set/contains methods that wrap over __dict__."""
 
@@ -47,18 +49,18 @@ namespaces = NamespaceHolder()
 
 class GDict(dict):
   def __setitem__(self, key, value):
-    globals()[key] = value
+    vars(__main__)[key] = value
     super().__setitem__(key, value)
 
 
 def globals_snapshot():
   """Stores a snapshot of the current global namespace in the G object. This allows you to use the global namespace as if it was local, and then retrieve the original variables using <globals_restore()>."""
-  G.__dict__ = GDict(globals().items())
+  G.__dict__ = GDict(vars(__main__).items())
 
 
 def globals_restore():
   """Restores the global variables stored in the G object."""
-  g = globals()
+  g = vars(__main__)
   gg = G
   fallback = g.copy()
 
@@ -82,7 +84,7 @@ def use_namespace(enable: bool=True, name: Optional[str]=None, ns: Optional[Name
     try: 
       if ns is not None:
          ns.__dict__ = GDict(ns.__dict__.items())
-         globals().update(ns.__dict__)
+         vars(__main__).update(ns.__dict__)
          yield ns
       else:
         yield None
