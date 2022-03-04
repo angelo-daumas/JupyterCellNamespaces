@@ -16,7 +16,7 @@ This module will generally be used by "activating" namespaces inside of an `with
 You can limit the scope of variables so that they only exist inside of the `with` block, without having to actually name a `Namespace` object. You can still declare globals by using the G object. If you specify the enable parameter `use_namespace(enable=False)`, then you can disable scoping for testing purposes.
 
 ```python
-with with use_namespace():
+with use_namespace():
   abc = 2
   G.cba = 0
   print(abc)  # will print 2 on the console.
@@ -27,7 +27,7 @@ cba  # Will be equal to 0.
 ```
 
 ```python
-with with use_namespace(False):
+with use_namespace(False):
   abc = 2
   G.cba = 0
   print(abc)  # will print 2 on the console.
@@ -40,7 +40,7 @@ cba  # Will be equal to 0.
 ### Using the `use_namespace` function:
 
 ```python
-with with use_namespace(name='my_namespace') as NS:
+with use_namespace(name='my_namespace') as NS:
   abc = 2
   print(abc)  # will print 2 on the console.
 
