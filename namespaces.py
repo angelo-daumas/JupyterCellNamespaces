@@ -29,7 +29,7 @@ class Namespace(GlobalNamespace):
   """Class used for namespaces (apart from the global namespace)."""
 
   def __call__(self):
-     return use_local_namespace(ns=self)
+     return use_namespace(ns=self)
 
 class NamespaceHolder(AttributeDict):
   """Class used for the <namespaces> object, used to automagically create namespaces."""
