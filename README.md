@@ -73,3 +73,8 @@ with NS():
 NS.abc  # Will be equal to 2
 abc  # ERROR: Will not exist.
 ```
+
+## Limitations
+
+* Not compatible with functions (globals used inside functions will always be scoped to the current namespace, even if they were declared in a previous one)
+* Variables get marked as "undeclared" if they are only declared using `G.var_name` or `NS.var_name`.
